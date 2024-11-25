@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:13 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/11/24 16:49:03 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/11/25 20:47:39 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	find_new_line(t_list *new_node)
 
 	i = 0;
 	if (!new_node || !new_node->content)
-		return -1;
+		return (-1);
 	while (i < BUFFER_SIZE)
 	{
 		if (new_node->content[i] == '\n')
@@ -43,24 +43,4 @@ int	find_new_line(t_list *new_node)
 		i++;
 	}
 	return (-1);
-}
-
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	dest_len;
-
-	i = 0;
-	dest_len = 0;
-	while (dest[dest_len])
-	{
-		dest_len++;
-	}
-	while (src[i])
-	{
-		dest[dest_len + i] = src[i];
-		i++;
-	}
-	dest[dest_len + i] = '\0';
-	return (dest);
 }

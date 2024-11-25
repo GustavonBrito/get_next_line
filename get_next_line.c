@@ -6,23 +6,22 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:11 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/11/24 20:03:07 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/11/25 20:48:55 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "get_next_line_utils.c"
 #include <stdio.h>
 #include <string.h>
 
-char	*append_conn(t_list *current, int total_buffer_len)
+char	*append_buffer_until_n(t_list *current, int total_buffer_len)
 {
-	int i;
-	int j;
-	char *buffer_to_return;
+	int		i;
+	int		j;
+	char	*buffer_to_return;
+
 	j = 0;
 	i = 0;
-	
 	buffer_to_return = (char *)malloc(sizeof(char) * total_buffer_len);
 	if (!buffer_to_return)
 		return ((void *)0);
@@ -35,25 +34,25 @@ char	*append_conn(t_list *current, int total_buffer_len)
 			i++;
 		}
 		if (current->content[i] == '\n')
-			break;
+			break ;
 		j += i;
 		current = current->next;
 	}
-	buffer_to_return[j+ i] = '\0';
-	return(buffer_to_return);
+	buffer_to_return[j + i] = '\0';
+	return (buffer_to_return);
 }
 
 char	*get_n_and_return_buffer(t_list **list, int fd)
 {
-	int total_buffer_len;
-	int pos_index;
-	char *buffer;
-	t_list *tmp;
-	t_list *current;
+	int		total_buffer_len;
+	int		pos_index;
+	char	*buffer;
+	t_list	*tmp;
+	t_list	*current;
 
 	total_buffer_len = 0;
 	tmp = *list;
-	while((pos_index = find_new_line(tmp)) == -1)
+	while ((pos_index = find_new_line(tmp)) == -1)
 	{
 		total_buffer_len += BUFFER_SIZE;
 		tmp->next = malloc_new_t_list();
@@ -63,7 +62,7 @@ char	*get_n_and_return_buffer(t_list **list, int fd)
 	total_buffer_len += pos_index + 1;
 	current = *list;
 	buffer = (char *)malloc(sizeof(char) * total_buffer_len);
-	buffer = create_buffer_with_n_terminated(current,total_buffer_len);
+	buffer = append_buffer_until_n(current, total_buffer_len);
 	(*list)->content[0] = tmp->content[pos_index + 1];
 	return (buffer);
 }
@@ -71,31 +70,30 @@ char	*get_n_and_return_buffer(t_list **list, int fd)
 char	*get_next_line(int fd)
 {
 	static t_list	*head = NULL;
-	char 			*buffer;
+	char			*buffer;
 
 	buffer = NULL;
-	if(fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
 		return (NULL);
-	
 	if (!head)
 	{
 		head = malloc_new_t_list();
-        if (!head || read(fd, head->content, BUFFER_SIZE) <= 0)
+		if (!head || read(fd, head->content, BUFFER_SIZE) <= 0)
 			return (NULL);
 	}
 	buffer = get_n_and_return_buffer(&head, fd);
 	return (buffer);
 }
 
-int	main(void)
-{
-	int fd;
-	char *buffer;
+// int	main(void)
+// {
+// 	int fd;
+// 	char *buffer;
 
-	fd = 0;
-	fd = open("arquivo.txt", O_RDONLY);
-	buffer = get_next_line(fd);
+// 	fd = 0;
+// 	fd = open("arquivo.txt", O_RDONLY);
+// 	buffer = get_next_line(fd);
 
-	printf("%s", buffer);
-	return (0);
-}
+// 	printf("%s\n", buffer);
+// 	return (0);
+// }
