@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:11 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/11/25 20:48:55 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/11/25 23:33:15 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*append_buffer_until_n(t_list *current, int total_buffer_len)
 {
 	int		i;
 	int		j;
-	char	*buffer_to_return;
+	char	*buffer_to_return ;
 
 	j = 0;
 	i = 0;
@@ -52,13 +52,14 @@ char	*get_n_and_return_buffer(t_list **list, int fd)
 
 	total_buffer_len = 0;
 	tmp = *list;
-	while ((pos_index = find_new_line(tmp)) == -1)
+	while (find_new_line(tmp) == -1)
 	{
 		total_buffer_len += BUFFER_SIZE;
 		tmp->next = malloc_new_t_list();
 		tmp = tmp->next;
 		read(fd, tmp->content, BUFFER_SIZE);
 	}
+	pos_index = find_new_line(tmp);
 	total_buffer_len += pos_index + 1;
 	current = *list;
 	buffer = (char *)malloc(sizeof(char) * total_buffer_len);
@@ -85,15 +86,31 @@ char	*get_next_line(int fd)
 	return (buffer);
 }
 
-// int	main(void)
+// fd = 0;
+// fd = open("arquivo.txt", O_RDONLY);
+// int main(void)
 // {
-// 	int fd;
-// 	char *buffer;
+//     int fd;
+//     char *buffer;
 
-// 	fd = 0;
-// 	fd = open("arquivo.txt", O_RDONLY);
-// 	buffer = get_next_line(fd);
+//     // Allocate buffer for scanf
+//     buffer = (char *)malloc(1024);  // reasonable size for input
+//     if (!buffer)
+//         return (1);
 
-// 	printf("%s\n", buffer);
-// 	return (0);
+//     // Read input with scanf
+//     printf("Enter text: ");
+//     scanf("%s", buffer);
+
+//     // Use STDIN (fd 0) for get_next_line
+//     fd = 0;
+
+//     // Get and print line
+//     while ((buffer = get_next_line(fd)) != NULL)
+//     {
+//         printf("Line read: %s", buffer);
+//         free(buffer);
+//     }
+
+//     return (0);
 // }
