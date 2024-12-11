@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:08 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/11/25 20:28:05 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/11 01:35:38 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ typedef struct s_list
 t_list				*malloc_new_t_list(void);
 int					find_new_line(t_list *new_node);
 char				*get_next_line(int fd);
-t_list				*malloc_new_t_list(void);
-int					find_new_line(t_list *new_node);
+void				free_memory_after_n_encountered(t_list **node_to_be_freed,
+						t_list *tmp, int pos_n);
+char				*ft_strdup(char *s);
+size_t				ft_strlcat(char *dst, char *src, size_t size);
 
 #endif
