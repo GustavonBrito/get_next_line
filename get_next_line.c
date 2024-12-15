@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:11 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/14 21:16:43 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/15 19:35:30 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*append_buffer_until_n(t_list *current, int buffer_len,
 	if (buffer_len < 0 || current == NULL)
 		return (NULL);
 	buffer_to_return[0] = '\0';
-	while (ft_strlcat(buffer_to_return, current->content, buffer_len) == i)
+	while (ft_strlcat(buffer_to_return, current->content, buffer_len + 1) == i)
 	{
 		i += tmp_i;
 		current = current->next;
@@ -99,6 +99,8 @@ char	*find_n_return_buffer(t_list **list, int fd, int *ptr_no_new_line)
 	buffer = append_buffer_until_n(*list, buffer_len, ptr_no_new_line);
 	pos_n = find_new_line(tmp, ptr_no_new_line);
 	free_memory_assign_new_content(list, tmp, pos_n);
+	if (*list == tmp && pos_n >= 0)
+		*list = tmp->next;
 	return (buffer);
 }
 
@@ -124,8 +126,7 @@ char	*get_next_line(int fd)
 	if (!head)
 	{
 		head = malloc_new_t_list();
-		if (!head || read(fd, head->content, BUFFER_SIZE) <= 0
-			|| head->content[0] == '\0')
+		if (!head || read(fd, head->content, BUFFER_SIZE) <= 0)
 		{
 			free(head->content);
 			free(head);
@@ -141,20 +142,20 @@ int	main(void)
 {
 	int	fd;
 	char *buffer;
-	//int i;
+	int i;
 
-	//i = 0;
+	i = 0;
 	fd = open("arquivo.txt", O_RDONLY);
-	buffer = get_next_line(fd);
-	printf("%s",buffer);
-	free(buffer);
-	// while (i < 6)
-	// {
-	// 	buffer = get_next_line(fd);
-	// 	printf("%s", buffer);
-	// 	free(buffer);
-	// 	i++;
-	// }
+	// buffer = get_next_line(fd);
+	// printf("%s",buffer);
+	// free(buffer);
+	while (i < 2)
+	{
+		buffer = get_next_line(fd);
+		printf("%s", buffer);
+		free(buffer);
+		i++;
+	}
 	close(fd);
 	return (0);
 }

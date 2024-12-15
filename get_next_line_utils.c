@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:13 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/14 21:00:03 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/15 19:32:22 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,5 @@ void	free_memory_assign_new_content(t_list **node_to_be_freed, t_list *tmp,
 	{
 		free(tmp->content);
 		tmp->content = new_content;
-		free(new_content);
 	}
 }
