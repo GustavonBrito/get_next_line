@@ -6,7 +6,7 @@
 /*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:11 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/15 19:35:30 by gserafio         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:04:08 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	find_n(t_list **tmp, int fd, int buffer_len, int *ptr_no_new_line)
 {
 	ssize_t	size_read;
 
-	size_read = 0;
-	while (find_new_line(*tmp, ptr_no_new_line) == -1)
+	size_read = 1;
+	while (find_new_line(*tmp, ptr_no_new_line) == -1 || size_read == 0)
 	{
 		buffer_len += BUFFER_SIZE;
 		(*tmp)->next = malloc_new_t_list();
@@ -99,8 +99,6 @@ char	*find_n_return_buffer(t_list **list, int fd, int *ptr_no_new_line)
 	buffer = append_buffer_until_n(*list, buffer_len, ptr_no_new_line);
 	pos_n = find_new_line(tmp, ptr_no_new_line);
 	free_memory_assign_new_content(list, tmp, pos_n);
-	if (*list == tmp && pos_n >= 0)
-		*list = tmp->next;
 	return (buffer);
 }
 
@@ -121,7 +119,7 @@ char	*get_next_line(int fd)
 	buffer = NULL;
 	no_new_line = 0;
 	ptr_no_new_line = &no_new_line;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buffer, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!head)
 	{

@@ -6,7 +6,7 @@
 /*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:13 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/15 19:32:22 by gserafio         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:00:06 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ int	find_new_line(t_list *new_node, int *no_new_line)
 		return (-1);
 	while (i < BUFFER_SIZE)
 	{
-		if (new_node->content[i] == '\n' || new_node->content[i] == '\0')
+		if (new_node->content[i] == '\n')
 		{
 			if (new_node->content[i] == '\n')
 				return (i);
-			if (new_node->content[i] == '\0')
-			{
-				*no_new_line = 1;
-				return (i);
-			}
+			// if (new_node->content[i] == '\0')
+			// {
+			// 	*no_new_line = 1;
+			// 	return (i);
+			// }
 		}
 		i++;
 	}
