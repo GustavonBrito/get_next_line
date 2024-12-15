@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:11 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/14 13:13:45 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/14 21:16:43 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ char	*append_buffer_until_n(t_list *current, int buffer_len,
 int	find_n(t_list **tmp, int fd, int buffer_len, int *ptr_no_new_line)
 {
 	ssize_t	size_read;
-	int		pos_n_index;
 
 	size_read = 0;
-	pos_n_index = 0;
 	while (find_new_line(*tmp, ptr_no_new_line) == -1)
 	{
 		buffer_len += BUFFER_SIZE;
@@ -75,8 +73,7 @@ int	find_n(t_list **tmp, int fd, int buffer_len, int *ptr_no_new_line)
 			return (-1);
 		(*tmp)->content[size_read] = '\0';
 	}
-	pos_n_index = find_new_line(*tmp, ptr_no_new_line);
-	buffer_len += pos_n_index;
+	buffer_len += find_new_line(*tmp, ptr_no_new_line);
 	return (buffer_len);
 }
 
@@ -100,8 +97,6 @@ char	*find_n_return_buffer(t_list **list, int fd, int *ptr_no_new_line)
 	if (buffer_len == -1)
 		return (NULL);
 	buffer = append_buffer_until_n(*list, buffer_len, ptr_no_new_line);
-	if (*ptr_no_new_line == 1)
-		(*list)->next = NULL;
 	pos_n = find_new_line(tmp, ptr_no_new_line);
 	free_memory_assign_new_content(list, tmp, pos_n);
 	return (buffer);
@@ -129,7 +124,8 @@ char	*get_next_line(int fd)
 	if (!head)
 	{
 		head = malloc_new_t_list();
-		if (!head || read(fd, head->content, BUFFER_SIZE) <= 0)
+		if (!head || read(fd, head->content, BUFFER_SIZE) <= 0
+			|| head->content[0] == '\0')
 		{
 			free(head->content);
 			free(head);
@@ -138,7 +134,6 @@ char	*get_next_line(int fd)
 		}
 	}
 	buffer = find_n_return_buffer(&head, fd, ptr_no_new_line);
-	free(head);
 	return (buffer);
 }
 
@@ -146,30 +141,18 @@ int	main(void)
 {
 	int	fd;
 	char *buffer;
+	//int i;
 
+	//i = 0;
 	fd = open("arquivo.txt", O_RDONLY);
 	buffer = get_next_line(fd);
 	printf("%s",buffer);
 	free(buffer);
-	// while (get_next_line(fd) != NULL)
+	// while (i < 6)
 	// {
-	// 	get_next_line(fd);
-	// }
-	// char	*buffer;
-	// int		i;
-	//
-	// i = 0;
-	// if (fd < 0)
-	// {
-	//     perror("Error opening file");
-	//     return (1);
-	// }
-	// get_next_line(fd);
-	// while (i < 1)
-	// {
-	//     buffer = get_next_line(fd);
+	// 	buffer = get_next_line(fd);
 	// 	printf("%s", buffer);
-	//     free(buffer);
+	// 	free(buffer);
 	// 	i++;
 	// }
 	close(fd);
