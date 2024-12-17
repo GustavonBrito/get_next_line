@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:08 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/14 13:03:55 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/17 15:01:43 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,12 @@
 #  define BUFFER_SIZE 10
 # endif
 
-# include <fcntl.h>
 # include <stdlib.h>
-# include <unistd.h>
 
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}					t_list;
-
-t_list				*malloc_new_t_list(void);
-int					find_new_line(t_list *new_node, int *no_new_line);
-char				*get_next_line(int fd);
-void				free_memory_assign_new_content(t_list **node_to_be_freed,
-						t_list *tmp, int pos_n);
-char				*ft_strdup(char *s);
-size_t				ft_strlcat(char *dst, char *src, size_t size);
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
 
 #endif

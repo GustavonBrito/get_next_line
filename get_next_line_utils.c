@@ -6,153 +6,112 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:13 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/14 21:00:03 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/17 14:53:17 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-/**
- * @brief Allocates memory for a new linked list node and its content buffer.
- * @return a pointer to the newly created
- * 	node, or NULL if memory allocation fails
- */
-t_list	*malloc_new_t_list(void)
+size_t	ft_strlen(const char *s)
 {
-	t_list			*new_node;
-	unsigned int	i;
+	size_t	s_length;
 
-	i = 0;
-	new_node = (t_list *)malloc(sizeof(t_list));
-	if (new_node == NULL)
-		return (NULL);
-	new_node->content = (char *)malloc(BUFFER_SIZE + 1);
-	if (!new_node->content)
+	s_length = 0;
+	while (*s)
 	{
-		free(new_node);
-		return ((void *)0);
+		s_length++;
+		s++;
 	}
-	while (i < BUFFER_SIZE + 1)
-	{
-		new_node->content[i] = 0;
-		i++;
-	}
-	new_node->next = NULL;
-	return (new_node);
+	return (s_length);
 }
 
-/**
- * @brief Searches for a newline character in the content of the given node.
- * @param new_node a pointer to the node to be searched
- * @return the index of the newline character if found, or -1 if not found
- */
-int	find_new_line(t_list *new_node, int *no_new_line)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	if (!new_node || !new_node->content || !no_new_line)
-		return (-1);
-	while (i < BUFFER_SIZE)
+	if (c > 255)
+		c = c % 256;
+	while (s[i])
 	{
-		if (new_node->content[i] == '\n' || new_node->content[i] == '\0')
-		{
-			if (new_node->content[i] == '\n')
-				return (i);
-			if (new_node->content[i] == '\0')
-			{
-				*no_new_line = 1;
-				return (i);
-			}
-		}
+		if (s[i] == c)
+			return (s = &s[i]);
 		i++;
 	}
-	return (-1);
+	if (c == 0)
+		return (s = &s[i]);
+	return (0);
 }
 
-/**
- * @param s a pointer to the first char of s
- * @brief Duplicates the array of char to a new char of arrays.
- */
-char	*ft_strdup(char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		index;
-	char	*string_dup;
-	int		s_size;
+	unsigned int	k;
+	unsigned int	i;
+	unsigned int	j;
+	char			*pointer_malloc;
 
-	index = 0;
-	s_size = 0;
-	while (s[index])
+	if (s1 && s2)
 	{
-		index++;
-		s_size++;
+		i = ft_strlen(s1);
+		j = ft_strlen(s2);
+		k = -1;
+		pointer_malloc = (char *)malloc(sizeof(char) * (i + j + 1));
+		if (pointer_malloc == ((void *)0))
+			return ((void *)0);
+		while (s1[++k])
+			pointer_malloc[k] = s1[k];
+		k = -1;
+		while (s2[++k])
+		{
+			pointer_malloc[i] = s2[k];
+			i++;
+		}
+		pointer_malloc[i] = '\0';
+		return (pointer_malloc);
 	}
-	string_dup = (char *)malloc((s_size + 1) * sizeof(char));
-	if (string_dup == (void *)0)
-		return ((void *)0);
-	index = 0;
-	while (s[index])
-	{
-		string_dup[index] = s[index];
-		index++;
-	}
-	string_dup[s_size] = '\0';
-	return (string_dup);
+	return ((void *)0);
 }
 
-size_t	ft_strlcat(char *dst, char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	size_t	i;
-	size_t	dest_size;
-	size_t	src_size;
+	unsigned int	i;
+	unsigned int	src_size;
 
-	i = 0;
-	dest_size = 0;
 	src_size = 0;
-	if (!dst || !src || size <= 0)
-		return (0);
-	while (src[src_size] && src[src_size] != '\n')
+	i = 0;
+	while (src[i])
+	{
+		i++;
 		src_size++;
-	while (dst[dest_size] && dest_size < size)
-		dest_size++;
+	}
 	if (size == 0)
 		return (src_size);
-	while (dest_size + i < size && src[i])
+	i = 0;
+	while (src[i] && i < size - 1)
 	{
-		dst[dest_size + i] = src[i];
+		dst[i] = src[i];
 		i++;
 	}
-	dst[dest_size + i] = '\0';
-	if (size <= dest_size)
-		return (src_size + size);
-	return (dest_size + src_size);
+	dst[i] = '\0';
+	return (src_size);
 }
 
-/**
- * @brief Frees the memory allocated for the linked list.
- * @param list a pointer to the head of the linked list
- */
-void	free_memory_assign_new_content(t_list **node_to_be_freed, t_list *tmp,
-		int pos_n)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	t_list	*next_tmp;
-	char	*new_content;
+	unsigned char	*s_unsigned;
+	unsigned int	c_unsigned;
+	unsigned int	i;
 
-	if (!node_to_be_freed || !*node_to_be_freed || !tmp || pos_n < 0)
-		return ;
-	while ((*node_to_be_freed) != tmp)
+	s_unsigned = s;
+	c_unsigned = c;
+	i = 0;
+	if (n == 0)
+		return (s_unsigned);
+	while (i < n)
 	{
-		next_tmp = (*node_to_be_freed)->next;
-		free((*node_to_be_freed)->content);
-		free(*node_to_be_freed);
-		(*node_to_be_freed) = next_tmp;
+		s_unsigned[i] = c_unsigned;
+		i++;
 	}
-	new_content = ft_strdup(tmp->content + pos_n + 1);
-	if (new_content)
-	{
-		free(tmp->content);
-		tmp->content = new_content;
-		free(new_content);
-	}
+	return (s_unsigned);
 }
