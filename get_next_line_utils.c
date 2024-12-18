@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:13 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/17 14:53:17 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/18 03:15:37 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,29 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_size);
 }
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*s_unsigned;
-	unsigned int	c_unsigned;
 	unsigned int	i;
 
-	s_unsigned = s;
-	c_unsigned = c;
-	i = 0;
-	if (n == 0)
-		return (s_unsigned);
-	while (i < n)
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	if (dest < src)
 	{
-		s_unsigned[i] = c_unsigned;
-		i++;
+		i = 0;
+		while (i < n)
+		{
+			((char *) dest)[i] = ((char *) src)[i];
+			i++;
+		}
 	}
-	return (s_unsigned);
+	else
+	{
+		i = n;
+		while (i > 0)
+		{
+			((char *) dest)[i - 1] = ((char *) src)[i - 1];
+			i--;
+		}
+	}
+	return (dest);
 }
