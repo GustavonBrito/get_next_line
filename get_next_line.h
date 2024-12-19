@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:08 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/18 23:26:37 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/19 19:26:56 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-void	*ft_memset(void *s, int c, size_t n);
+char	*ft_strdup(const char *s);
 
 #endif

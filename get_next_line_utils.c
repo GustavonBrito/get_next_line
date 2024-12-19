@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
+/*   By: gserafio <gserafio@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:13 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/18 03:15:37 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/19 19:22:11 by gserafio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,29 +97,55 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_size);
 }
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+char	*ft_strdup(const char *s)
 {
-	unsigned int	i;
+	int		index;
+	char	*string_dup;
+	int		s_size;
 
-	if (dest == NULL && src == NULL)
-		return (NULL);
-	if (dest < src)
+	index = 0;
+	s_size = 0;
+	while (s[index])
 	{
-		i = 0;
-		while (i < n)
-		{
-			((char *) dest)[i] = ((char *) src)[i];
-			i++;
-		}
+		index++;
+		s_size++;
 	}
-	else
+	string_dup = (char *)malloc(s_size + 1 * sizeof(char));
+	if (string_dup == (void *)0)
+		return ((void *)0);
+	index = 0;
+	while (s[index])
 	{
-		i = n;
-		while (i > 0)
-		{
-			((char *) dest)[i - 1] = ((char *) src)[i - 1];
-			i--;
-		}
+		string_dup[index] = s[index];
+		index++;
 	}
-	return (dest);
+	string_dup[s_size] = '\0';
+	return (string_dup);
 }
+
+// void	*ft_memmove(void *dest, const void *src, size_t n)
+// {
+// 	unsigned int	i;
+
+// 	if (dest == NULL && src == NULL)
+// 		return (NULL);
+// 	if (dest < src)
+// 	{
+// 		i = 0;
+// 		while (i < n)
+// 		{
+// 			((char *) dest)[i] = ((char *) src)[i];
+// 			i++;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		i = n;
+// 		while (i > 0)
+// 		{
+// 			((char *) dest)[i - 1] = ((char *) src)[i - 1];
+// 			i--;
+// 		}
+// 	}
+// 	return (dest);
+// }
