@@ -6,7 +6,7 @@
 /*   By: gustavo-linux <gustavo-linux@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 00:18:08 by gustavo-lin       #+#    #+#             */
-/*   Updated: 2024/12/18 03:04:26 by gustavo-lin      ###   ########.fr       */
+/*   Updated: 2024/12/18 23:26:37 by gustavo-lin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1009
+#  define BUFFER_SIZE 1000
 # endif
 
 # include <stdlib.h>
